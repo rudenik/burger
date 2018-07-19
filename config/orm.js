@@ -1,22 +1,58 @@
 var connection = require('../config/connection.js');
 
-function createQMarksString(numberOfMarks){
-    var marksArr = [];
-    for (marks in numberOfMarks){
-        marksArr.push("?");
-    }
-    return marksArr.toString();
-}
-
 var orm = {
-    selectAll: function(table){
-
+    selectAll: function(tableName){
+        var query = `SELECT * FROM ${tableName}`;
+        connection.query(query, (err, data)=>{
+            if (err){
+                console.log(err);
+                return false;
+            }
+            return data;
+        })
     },
-    instertOne: function(table){
+    insertOne: function(tableName, model, callback){
+        var keys = [];
+        var values = [];
+        Object.keys(model).forEach(x => {
+            keys.push(x);
+            values.push(model[x]);
+        })
+        var marks = keys.map(x => '?');
+        var query = `INSERT INTO ${tableName} (${keys})
+        VALUES (${marks})`;
+
+        connection.query(query, values, (err, data) => {
+            if (err){
+                console.log(err);
+                return false;
+            }
+                callback(data);
+            
+            
+        })
 
     }, 
-    updateOne: function(table){
-
+    updateOne: function(tableName, model){
+        var keys = [];
+        var values = [];
+        var id;
+        Object.keys(model).forEach(x => {
+            if(x==='id'){
+                id=model[x];
+            }
+            keys.push(`${x}=?`);
+            values.push(model[x]);        
+        });
+        values.push(id);
+        var query = `UPDAATE ${tableName} SET ${keys} WHERE id = ?`;
+        connection.query(query, values, (err, data) => {
+            if (err){
+                console.log(err);
+                return false;
+            }
+            callback(data);
+        })
     }
 }
 
