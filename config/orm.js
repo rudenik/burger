@@ -23,7 +23,7 @@ var orm = {
         var marks = keys.map(x => '?');
         var query = `INSERT INTO ${tableName} (${keys})
         VALUES (${marks})`;
-
+        console.log("query: " + query)
         connection.query(query, values, (err, data) => {
             if (err){
                 console.log(err);
@@ -35,20 +35,21 @@ var orm = {
         })
 
     }, 
-    updateOne: function(tableName, model, callback){
-        var keys = [];
-        var values = [];
+    updateOne: function(tableName, id, callback){
+        // var keys = [];
+        // var values = [];
         var id;
-        Object.keys(model).forEach(x => {
-            if(x==='id'){
-                id=model[x];
-            }
-            keys.push(`${x}=?`);
-            values.push(model[x]);        
-        });
-        values.push(id);
-        var query = `UPDAATE ${tableName} SET ${keys} WHERE id = ?`;
-        connection.query(query, values, (err, data) => {
+        // console.log(JSON.stringify(model));
+        // Object.keys(model).forEach(x => {
+        //     if(x==='id'){
+        //         id=model[x];
+        //     }
+        //     keys.push(`${x}=?`);
+        //     values.push(model[x]);        
+        // });
+        // values.push(id);
+        var query = `UPDATE ${tableName} SET devoured = 1 WHERE id = ?`;
+        connection.query(query, id, (err, data) => {
             if (err){
                 console.log(err);
                 return false;

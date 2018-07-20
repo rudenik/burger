@@ -14,11 +14,9 @@ app.engine("handlebars", exphbs({ defaultLayout: "main",
                                     partialsDir  :  __dirname + '/views/layouts/partials/'                    }));
 app.set("view engine", "handlebars");
 
-// app.use(express.static("public"));
+app.use(express.static("public"));
 
 app.use(routes);
-
-
 
 app.listen(PORT, function(){
     console.log("we are listening on ... " + PORT);

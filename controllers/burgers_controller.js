@@ -3,7 +3,6 @@ var router = express.Router();
 var burger = require('../models/burger.js');
 
 router.get("/", function(req, res){
-    // console.log("we got a get request")
     burger.all(function(data){
         var hbsObj = {
             burgers: data
@@ -12,19 +11,20 @@ router.get("/", function(req, res){
         res.render("index", hbsObj);
     });
 });
-router.post("api/burgers", function(req, res){
-    burger.insert("burgers", req.body.burger_name, function(result){
-        // res.json({ id: result.insertId})
+router.post("/api/burgers", function(req, res){
+    console.log(req.body);
+    burger.insert(req.body, function(result){
         console.log(result.insertId);
     });
+    res.end();
+    
 });
 router.put("/api/burgers/:id", function(req, res){
-    var devoured = "id = " + req.params.id;
+    var devoured = req.params.id;
     console.log("sending devoured condition", devoured);
 
-    burger.update({
-        devoured: devoured
-    }, function(result){
+    burger.update(
+        devoured, function(result){
         if (result.changedRows === 0){
             return res.status(404).end();
         }

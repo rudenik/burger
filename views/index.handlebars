@@ -7,10 +7,10 @@
               <div class="container">
                 <div class="row">
                   <div class="col-10">
-                    <input class="new-item form-control" placeholder="Create a new burger" type="text" />
+                    <input class="new-item form-control" placeholder="Create a new burger" type="text" id="burger_name" required/>
                   </div>
                   <div class="col-2">
-                    <button type="submit" class="btn btn-success">Add Burger</button>
+                    <button type="submit" id="addButton" class="btn btn-success" >Add Burger</button>
                   </div>
                 </div>
               </div>
@@ -21,9 +21,9 @@
             <h3>Burgers that haven't been eaten</h3>
             <ul>
                 {{#each burgers}}
-                   
+                   {{#unless devoured }}
                         {{> burgers/burger-block devoured=false}}
-                 
+                    {{/unless}}
                 {{/each}}
             </ul>
         </div>

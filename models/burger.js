@@ -7,7 +7,8 @@ var burger = {
         });
     },
     insert: function(burger, callback){
-        orm.insertOne("bugers", burger, function(res){
+        // console.log("Burger to be inserted: " + JSON.stringify(burger));
+        orm.insertOne("burgers", burger, function(res){
             callback(res);
         });
     },

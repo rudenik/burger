@@ -14,7 +14,7 @@ connection.connect(function(err) {
     console.error("error connecting: " + err.stack);
     return;
   }
-  console.log("make sure you connected, the writing's on the wall");
+  console.log("make sure you're connected, the writing's on the wall");
 });
 
 module.exports = connection;
