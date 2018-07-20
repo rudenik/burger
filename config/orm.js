@@ -1,14 +1,16 @@
 var connection = require('../config/connection.js');
 
 var orm = {
-    selectAll: function(tableName){
+    selectAll: function(tableName, callback){
         var query = `SELECT * FROM ${tableName}`;
+        // console.log("orm select all query")
         connection.query(query, (err, data)=>{
             if (err){
                 console.log(err);
-                return false;
+                callback(err);
             }
-            return data;
+            // console.log(data);
+            callback(data);
         })
     },
     insertOne: function(tableName, model, callback){
@@ -25,7 +27,7 @@ var orm = {
         connection.query(query, values, (err, data) => {
             if (err){
                 console.log(err);
-                return false;
+                callback(err);
             }
                 callback(data);
             
@@ -33,7 +35,7 @@ var orm = {
         })
 
     }, 
-    updateOne: function(tableName, model){
+    updateOne: function(tableName, model, callback){
         var keys = [];
         var values = [];
         var id;
